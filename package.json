@@ -1,0 +1,26 @@
+{
+  "name": "bloql",
+  "version": "0.1.0",
+  "description": "blog engine",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adriantoine/bloql.git"
+  },
+  "keywords": [
+    "blog",
+    "engine",
+    "react",
+    "relay",
+    "graphql"
+  ],
+  "author": "Adrien Antoine",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adriantoine/bloql/issues"
+  },
+  "homepage": "https://github.com/adriantoine/bloql#readme"
+}
