@@ -17,7 +17,7 @@
     "relay",
     "graphql"
   ],
-  "author": "Adrien Antoine",
+  "author": "Adrien Antoine <adriantoine@gmail.com> (http://adriantoine.com/)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/adriantoine/bloql/issues"
