@@ -1,8 +1,8 @@
 
 import Relay from 'react-relay';
 
-export default function (Post) {
-  return Relay.createContainer(Post, {
+function createPostItem(PostItem) {
+  return Relay.createContainer(PostItem, {
     fragments: {
       post: () => Relay.QL`
         fragment on Post {
@@ -18,3 +18,7 @@ export default function (Post) {
     },
   });
 }
+
+export const create = function (PostItem) {
+  return createPostItem(PostItem);
+};
