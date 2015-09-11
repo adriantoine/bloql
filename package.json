@@ -2,13 +2,14 @@
   "name": "bloql",
   "version": "0.1.0",
   "description": "blog engine",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rm -rf dist/",
+    "update-schema": "mkdir -p dist/server/schema/ && babel-node ./scripts/updateSchema.js",
+    "build": "npm run clean && npm run update-schema && gulp build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adriantoine/bloql.git"
+    "url": "git+ssh://git@github.com:adriantoine/bloql.git"
   },
   "keywords": [
     "blog",
@@ -20,7 +21,25 @@
   "author": "Adrien Antoine <adriantoine@gmail.com> (http://adriantoine.com/)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/adriantoine/bloql/issues"
+    "url": "https://github.com/adriantoine/bloql/issues",
+    "email": "adriantoine@gmail.com"
   },
-  "homepage": "https://github.com/adriantoine/bloql#readme"
+  "homepage": "https://github.com/adriantoine/bloql#readme",
+  "dependencies": {
+    "app-root-path": "^1.0.0",
+    "express-graphql": "^0.3.0",
+    "graphql": "^0.4.3",
+    "graphql-relay": "^0.3.2",
+    "gray-matter": "^2.0.1",
+    "lodash": "^3.10.1",
+    "markdown-it": "^4.4.0",
+    "react": "^0.14.0-rc1",
+    "react-relay": "^0.2.1"
+  },
+  "devDependencies": {
+    "babel": "^5.8.23",
+    "babel-relay-plugin": "^0.2.2",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.1"
+  }
 }
