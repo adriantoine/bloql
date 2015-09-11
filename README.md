@@ -4,4 +4,6 @@ Blog engine powered by blog engine powered by [React](https://facebook.github.io
 
 # Usage
 
+It is currently used on an experimental version of my personal website: https://github.com/adriantoine/adriantoine.com/tree/react
+
 Doc to be coming
