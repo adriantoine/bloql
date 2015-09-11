@@ -1,7 +1,7 @@
 {
   "name": "bloql",
   "version": "0.2.0",
-  "description": "blog engine",
+  "description": "Blog engine powered by blog engine powered by React using Relay and GraphQL to interact with data",
   "scripts": {
     "clean": "rm -rf dist/",
     "update-schema": "mkdir -p dist/server/schema/ && babel-node ./scripts/updateSchema.js",
