@@ -3,7 +3,7 @@ import Relay, { RootContainer } from 'react-relay';
 import React, { Component } from 'react';
 import Route from './routes/BlogRoute';
 
-function createPostList(PostList, PostItem) {
+function createPostList(PostList) {
   return Relay.createContainer(PostList, {
     fragments: {
       posts: () => Relay.QL`
@@ -11,7 +11,7 @@ function createPostList(PostList, PostItem) {
           edges {
             node {
               id,
-              ${PostItem.getFragment('post')}
+              ${PostList.PostItem.getFragment('post')}
             }
           }
         }
@@ -52,8 +52,10 @@ function createRoot(Blog) {
   };
 }
 
-export const create = function (PostList, PostItem) {
-  var postList = createPostList(PostList, PostItem);
-  var blog = createBlog(postList);
-  return createRoot(blog);
+export const create = function (PostList) {
+  return createRoot(
+    createBlog(
+      createPostList(PostList)
+    )
+  );
 };
