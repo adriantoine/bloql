@@ -1,7 +1,7 @@
 
 import Relay, { RootContainer } from 'react-relay';
 import React, { Component } from 'react';
-import Routes from './Routes';
+import Route from './routes/BlogRoute';
 
 function createPostList(PostList, PostItem) {
   return Relay.createContainer(PostList, {
@@ -46,7 +46,7 @@ function createRoot(Blog) {
   return class Root extends Component {
     render() {
       return (
-        <RootContainer Component={ Blog } route={ new Routes() }/>
+        <RootContainer Component={ Blog } route={ new Route() }/>
       );
     }
   };

@@ -65,17 +65,19 @@ export const getPostList = function (filters) {
     } else {
 
       for (let filter in filters) {
+        if ({}.hasOwnProperty.call(filters, filter)) {
 
-        // Filter by string filter
-        if (STRING_FILTERS.indexOf(filter) > -1 && post.meta[filter] === filters[filter]) {
-          retPostList.push(post);
+          // Filter by string filter
+          if (_.contains(STRING_FILTERS, filter) && post.meta[filter] === filters[filter]) {
+            retPostList.push(post);
+          }
+
+          // Filter by array filter
+          if (_.contains(ARRAY_FILTERS, filter) && _.intersection(post.meta[filter], filters[filter]).length) {
+            retPostList.push(post);
+          }
+
         }
-
-        // Filter by array filter
-        if (ARRAY_FILTERS.indexOf(filter) > -1 && _.intersection(post.meta[filter], filters[filter]).length) {
-          retPostList.push(post);
-        }
-
       }
 
     }
