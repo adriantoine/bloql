@@ -11,7 +11,13 @@ function createPostList(PostList) {
           edges {
             node {
               id,
-              ${PostList.PostItem.getFragment('post')}
+              meta {
+                title
+                slug
+                date
+                categories
+                tags
+              }
             }
           }
         }
@@ -21,7 +27,6 @@ function createPostList(PostList) {
 }
 
 function createBlog(RelayPostList, PostList) {
-  const postCount = PostList.postCount || 10;
 
   class _Blog extends Component {
     render() {
@@ -32,14 +37,20 @@ function createBlog(RelayPostList, PostList) {
   return Relay.createContainer(_Blog, {
 
     initialVariables: {
-      count: postCount
+      count: PostList.postCount || 10,
+
+      dateBefore: PostList.dateBefore || null,
+      dateAfter: PostList.dateAfter || null,
+      date: PostList.date || null,
+      categories: PostList.categories || null,
+      tags: PostList.tags || null,
     },
 
     fragments: {
       blog: () => {
         return Relay.QL`
           fragment on Blog {
-            posts(first: $count) {
+            posts(first: $count dateBefore:$dateBefore dateAfter:$dateAfter date:$date categories:$categories tags:$tags) {
               ${RelayPostList.getFragment('posts')}
             }
           }

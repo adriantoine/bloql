@@ -1,8 +1,11 @@
 
+import _ from 'lodash';
+
 import {
   GraphQLObjectType,
   GraphQLNonNull,
   GraphQLString,
+  GraphQLList,
 } from 'graphql/type';
 
 import {
@@ -83,8 +86,30 @@ export const blogType = new GraphQLObjectType({
     posts: {
       type: connection.connectionType,
       description: 'Blog posts',
-      args: connectionArgs,
-      resolve: (blog, args) => connectionFromArray(getPostList(), args),
+      args: _.extend(connectionArgs, {
+        dateBefore: {
+          type: GraphQLString
+        },
+        dateAfter: {
+          type: GraphQLString
+        },
+        date: {
+          type: GraphQLString
+        },
+        categories: {
+          type: new GraphQLList(GraphQLString)
+        },
+        tags: {
+          type: new GraphQLList(GraphQLString)
+        }
+      }),
+      resolve: (blog, args) => connectionFromArray(getPostList({
+        dateBefore: args.dateBefore,
+        dateAfter: args.dateAfter,
+        date: args.date,
+        categories: args.categories,
+        tags: args.tags
+      }), args),
     }
 
   },

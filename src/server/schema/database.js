@@ -5,6 +5,7 @@ import fs from 'fs';
 import path from 'path';
 
 import _ from 'lodash';
+import moment from 'moment';
 import metaParser from 'gray-matter';
 import MarkdownIt from 'markdown-it';
 const md = new MarkdownIt();
@@ -23,6 +24,10 @@ export function getBlog() {
   return blog;
 }
 
+const DATE_FILTERS = [
+  'date',
+];
+
 const STRING_FILTERS = [
   'title',
   'slug',
@@ -34,19 +39,31 @@ const ARRAY_FILTERS = [
 ];
 
 const getPost = function (filename) {
-
-  let content;
-
-  content = fs.readFileSync(path.join(appRoot.path, getPostsPath(), filename), 'utf8');
-
+  const content = fs.readFileSync(path.join(appRoot.path, getPostsPath(), filename), 'utf8');
   const parsed = metaParser(content);
-
   return {
     meta: parsed.data,
     content: md.render(parsed.content)
   };
-
 };
+
+// Filter by array field
+function arrayFilter(a, b) {
+  return !!_.intersection(a, b).length;
+}
+
+// Filter by date equality field
+function dateFilter(a, b) {
+  return moment(a).format('YYYYMMDD') === moment(b).format('YYYYMMDD');
+}
+
+function checkEmptyFilter(filters) {
+  return !filters ||
+    _.isEmpty(filters) ||
+    _.every(_.values(filters), function (filter) {
+      return _.isNull(filter) || _.isUndefined(filter);
+    });
+}
 
 export const getPostList = function (filters) {
 
@@ -60,7 +77,7 @@ export const getPostList = function (filters) {
 
     // Don't process a post if it doesn't have a slug since it's our unique id for a post
     if (post && post.meta && post.meta.slug) {
-      if (!filters || _.isEmpty(filters)) {
+      if (checkEmptyFilter(filters)) {
         // If there is no filters, add every blog post
         post.id = post.meta.slug;
         retPostList.push(post);
@@ -76,7 +93,13 @@ export const getPostList = function (filters) {
             }
 
             // Filter by array filter
-            if (_.contains(ARRAY_FILTERS, filter) && _.intersection(post.meta[filter], filters[filter]).length) {
+            if (_.contains(ARRAY_FILTERS, filter) && arrayFilter(post.meta[filter], filters[filter])) {
+              post.id = post.meta.slug;
+              retPostList.push(post);
+            }
+
+            // Filter by array filter
+            if (_.contains(DATE_FILTERS, filter) && dateFilter(post.meta[filter], filters[filter])) {
               post.id = post.meta.slug;
               retPostList.push(post);
             }
