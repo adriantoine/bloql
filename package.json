@@ -6,6 +6,7 @@
     "clean": "rm -rf dist/",
     "lint": "eslint src",
     "update-schema": "mkdir -p dist/server/schema/ && babel-node ./scripts/updateSchema.js",
+    "watch": "gulp watch",
     "build": "npm run clean && npm run lint && npm run update-schema && gulp build"
   },
   "repository": {

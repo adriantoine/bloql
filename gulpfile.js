@@ -20,6 +20,9 @@ gulp.task('cp', function() {
     .pipe(gulp.dest('./dist/'));
 });
 
-gulp.task('build', ['js', 'cp']);
+gulp.task('watch', function() {
+  gulp.watch('src/**/*.js', ['js']);
+});
 
+gulp.task('build', ['js', 'cp']);
 gulp.task('default', ['build']);

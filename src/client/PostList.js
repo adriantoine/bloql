@@ -20,20 +20,27 @@ function createPostList(PostList) {
   });
 }
 
-function createBlog(PostList) {
+function createBlog(RelayPostList, PostList) {
+  const postCount = PostList.postCount || 10;
+
   class _Blog extends Component {
     render() {
-      return <PostList posts={ this.props.blog.posts } />;
+      return <RelayPostList posts={ this.props.blog.posts } />;
     }
   }
 
   return Relay.createContainer(_Blog, {
+
+    initialVariables: {
+      count: postCount
+    },
+
     fragments: {
       blog: () => {
         return Relay.QL`
           fragment on Blog {
-            posts(first:10) {
-              ${PostList.getFragment('posts')}
+            posts(first: $count) {
+              ${RelayPostList.getFragment('posts')}
             }
           }
         `;
@@ -53,9 +60,7 @@ function createRoot(Blog) {
 }
 
 export const create = function (PostList) {
-  return createRoot(
-    createBlog(
-      createPostList(PostList)
-    )
-  );
+  var RelayPostList = createPostList(PostList);
+  var Blog = createBlog(RelayPostList, PostList);
+  return createRoot(Blog);
 };

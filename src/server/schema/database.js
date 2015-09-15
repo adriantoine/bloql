@@ -1,4 +1,6 @@
 
+// TODO: @refactoring This file needs some refactoring.
+
 import fs from 'fs';
 import path from 'path';
 
@@ -35,7 +37,7 @@ const getPost = function (filename) {
 
   let content;
 
-  content = fs.readFileSync(path.join(appRoot.path, getPostsPath(), filename + '.md'), 'utf8');
+  content = fs.readFileSync(path.join(appRoot.path, getPostsPath(), filename), 'utf8');
 
   const parsed = metaParser(content);
 
@@ -54,33 +56,37 @@ export const getPostList = function (filters) {
   for (var i = postList.length - 1; i >= 0; i--) {
     let postName = postList[i];
 
-    // Remove extension
-    postName = postName.replace(path.extname(postName), '');
-
     let post = getPost(postName);
 
-    if (!filters || _.isEmpty(filters)) {
-      // If there is no filters, add every blog post
-      retPostList.push(post);
-    } else {
+    // Don't process a post if it doesn't have a slug since it's our unique id for a post
+    if (post && post.meta && post.meta.slug) {
+      if (!filters || _.isEmpty(filters)) {
+        // If there is no filters, add every blog post
+        post.id = post.meta.slug;
+        retPostList.push(post);
+      } else {
 
-      for (let filter in filters) {
-        if ({}.hasOwnProperty.call(filters, filter)) {
+        for (let filter in filters) {
+          if ({}.hasOwnProperty.call(filters, filter)) {
 
-          // Filter by string filter
-          if (_.contains(STRING_FILTERS, filter) && post.meta[filter] === filters[filter]) {
-            retPostList.push(post);
+            // Filter by string filter
+            if (_.contains(STRING_FILTERS, filter) && post.meta[filter] === filters[filter]) {
+              post.id = post.meta.slug;
+              retPostList.push(post);
+            }
+
+            // Filter by array filter
+            if (_.contains(ARRAY_FILTERS, filter) && _.intersection(post.meta[filter], filters[filter]).length) {
+              post.id = post.meta.slug;
+              retPostList.push(post);
+            }
+
           }
-
-          // Filter by array filter
-          if (_.contains(ARRAY_FILTERS, filter) && _.intersection(post.meta[filter], filters[filter]).length) {
-            retPostList.push(post);
-          }
-
         }
-      }
 
+      }
     }
+
 
   }
 
