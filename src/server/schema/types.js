@@ -87,10 +87,10 @@ export const blogType = new GraphQLObjectType({
       type: connection.connectionType,
       description: 'Blog posts',
       args: _.extend(connectionArgs, {
-        dateBefore: {
+        beforeDate: {
           type: GraphQLString
         },
-        dateAfter: {
+        afterDate: {
           type: GraphQLString
         },
         date: {
@@ -104,8 +104,8 @@ export const blogType = new GraphQLObjectType({
         }
       }),
       resolve: (blog, args) => connectionFromArray(getPostList({
-        dateBefore: args.dateBefore,
-        dateAfter: args.dateAfter,
+        beforeDate: args.beforeDate,
+        afterDate: args.afterDate,
         date: args.date,
         categories: args.categories,
         tags: args.tags

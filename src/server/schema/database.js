@@ -14,6 +14,10 @@ import appRoot from 'app-root-path';
 
 import { getPostsPath } from '../../config';
 
+// Elements needed by Relay
+// TODO: Investigate how to get rid of these
+// ------------------------------
+
 export class Blog extends Object {}
 export class Post extends Object {}
 
@@ -24,28 +28,22 @@ export function getBlog() {
   return blog;
 }
 
-const DATE_FILTERS = [
-  'date',
-];
+// Filter functions
+// ------------------------------
 
-const STRING_FILTERS = [
-  'title',
-  'slug',
-];
-
-const ARRAY_FILTERS = [
-  'categories',
-  'tags',
-];
-
-const getPost = function (filename) {
-  const content = fs.readFileSync(path.join(appRoot.path, getPostsPath(), filename), 'utf8');
-  const parsed = metaParser(content);
-  return {
-    meta: parsed.data,
-    content: md.render(parsed.content)
-  };
+// Function to call by filter
+var filterFunctions = {
+  date: dateFilter,
+  title: stringFilter,
+  slug: stringFilter,
+  categories: arrayFilterAnd,
+  tags: arrayFilterAnd,
 };
+
+// Filter by date equality field
+function stringFilter(a, b) {
+  return a === b;
+}
 
 // // Filter by array field
 // // This one returns elements containing at least one of the filters
@@ -76,6 +74,15 @@ function checkEmptyFilter(filters) {
     });
 }
 
+const getPost = function (filename) {
+  const content = fs.readFileSync(path.join(appRoot.path, getPostsPath(), filename), 'utf8');
+  const parsed = metaParser(content);
+  return {
+    meta: parsed.data,
+    content: md.render(parsed.content)
+  };
+};
+
 export const getPostList = function (filters) {
 
   let retPostList = [];
@@ -97,20 +104,7 @@ export const getPostList = function (filters) {
         for (let filter in filters) {
           if (!isNullOrUndefined(filters[filter]) && {}.hasOwnProperty.call(filters, filter)) {
 
-            // Filter by string filter
-            if (_.contains(STRING_FILTERS, filter) && post.meta[filter] === filters[filter]) {
-              post.id = post.meta.slug;
-              retPostList.push(post);
-            }
-
-            // Filter by array filter
-            if (_.contains(ARRAY_FILTERS, filter) && arrayFilterAnd(post.meta[filter], filters[filter])) {
-              post.id = post.meta.slug;
-              retPostList.push(post);
-            }
-
-            // Filter by array filter
-            if (_.contains(DATE_FILTERS, filter) && dateFilter(post.meta[filter], filters[filter])) {
+            if (filterFunctions[filter](post.meta[filter], filters[filter])) {
               post.id = post.meta.slug;
               retPostList.push(post);
             }
