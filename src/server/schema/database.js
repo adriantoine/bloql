@@ -47,9 +47,16 @@ const getPost = function (filename) {
   };
 };
 
+// // Filter by array field
+// // This one returns elements containing at least one of the filters
+// function arrayFilterOr(a, b) {
+//   return !!_.intersection(a, b).length;
+// }
+
 // Filter by array field
-function arrayFilter(a, b) {
-  return !!_.intersection(a, b).length;
+// This one returns elements containing all the filters
+function arrayFilterAnd(a, b) {
+  return !_.difference(b, a).length;
 }
 
 // Filter by date equality field
@@ -57,11 +64,15 @@ function dateFilter(a, b) {
   return moment(a).format('YYYYMMDD') === moment(b).format('YYYYMMDD');
 }
 
+function isNullOrUndefined(a) {
+  return _.isNull(a) || _.isUndefined(a);
+}
+
 function checkEmptyFilter(filters) {
   return !filters ||
     _.isEmpty(filters) ||
     _.every(_.values(filters), function (filter) {
-      return _.isNull(filter) || _.isUndefined(filter);
+      return isNullOrUndefined(filter);
     });
 }
 
@@ -84,7 +95,7 @@ export const getPostList = function (filters) {
       } else {
 
         for (let filter in filters) {
-          if ({}.hasOwnProperty.call(filters, filter)) {
+          if (!isNullOrUndefined(filters[filter]) && {}.hasOwnProperty.call(filters, filter)) {
 
             // Filter by string filter
             if (_.contains(STRING_FILTERS, filter) && post.meta[filter] === filters[filter]) {
@@ -93,7 +104,7 @@ export const getPostList = function (filters) {
             }
 
             // Filter by array filter
-            if (_.contains(ARRAY_FILTERS, filter) && arrayFilter(post.meta[filter], filters[filter])) {
+            if (_.contains(ARRAY_FILTERS, filter) && arrayFilterAnd(post.meta[filter], filters[filter])) {
               post.id = post.meta.slug;
               retPostList.push(post);
             }
