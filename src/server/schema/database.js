@@ -31,6 +31,8 @@ export function getBlog() {
 
 // Function to call by filter
 var filterFunctions = {
+  startDate: startDateFilter,
+  endDate: endDateFilter,
   date: dateFilter,
   title: stringFilter,
   slug: stringFilter,
@@ -38,7 +40,7 @@ var filterFunctions = {
   tags: arrayFilterAnd,
 };
 
-// Filter by date equality field
+// Filter by string equality field
 function stringFilter(a, b) {
   return a === b;
 }
@@ -58,6 +60,16 @@ function arrayFilterAnd(a, b) {
 // Filter by date equality field
 function dateFilter(a, b) {
   return moment(a).format('YYYYMMDD') === moment(b).format('YYYYMMDD');
+}
+
+// Filter by date equality field
+function startDateFilter(a, b, meta) {
+  return moment(meta.date).isAfter(moment(b));
+}
+
+// Filter by date equality field
+function endDateFilter(a, b, meta) {
+  return moment(meta.date).isBefore(moment(b));
 }
 
 function isNullOrUndefined(a) {
@@ -86,7 +98,7 @@ function checkFilters(filtersParam, meta) {
 
   // Check that every filter pass
   return _.every(filters, function (value, filter) {
-    return filterFunctions[filter](meta[filter], value);
+    return filterFunctions[filter](meta[filter], value, meta);
   });
 
 }

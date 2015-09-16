@@ -39,8 +39,8 @@ function createBlog(RelayPostList, PostList) {
     initialVariables: {
       count: PostList.postCount || 10,
 
-      beforeDate: PostList.beforeDate || null,
-      afterDate: PostList.afterDate || null,
+      startDate: PostList.startDate || null,
+      endDate: PostList.endDate || null,
       date: PostList.date || null,
       categories: PostList.categories || null,
       tags: PostList.tags || null,
@@ -50,7 +50,7 @@ function createBlog(RelayPostList, PostList) {
       blog: () => {
         return Relay.QL`
           fragment on Blog {
-            posts(first: $count beforeDate:$beforeDate afterDate:$afterDate date:$date categories:$categories tags:$tags) {
+            posts(first: $count startDate:$startDate endDate:$endDate date:$date categories:$categories tags:$tags) {
               ${RelayPostList.getFragment('posts')}
             }
           }
