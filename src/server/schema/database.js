@@ -10,8 +10,6 @@ import metaParser from 'gray-matter';
 import MarkdownIt from 'markdown-it';
 const md = new MarkdownIt();
 
-import appRoot from 'app-root-path';
-
 import { getPostsPath } from '../../config';
 
 // Elements needed by Relay
@@ -28,7 +26,7 @@ export function getBlog() {
   return blog;
 }
 
-// Filter functions
+// Filters
 // ------------------------------
 
 // Function to call by filter
@@ -66,16 +64,38 @@ function isNullOrUndefined(a) {
   return _.isNull(a) || _.isUndefined(a);
 }
 
-function checkEmptyFilter(filters) {
-  return !filters ||
-    _.isEmpty(filters) ||
-    _.every(_.values(filters), function (filter) {
-      return isNullOrUndefined(filter);
-    });
+// Filter posts
+// ------------------------------
+
+// Clean filters list by removing all null and undefined values
+function cleanFilters(filters) {
+  return _(filters)
+      .pairs()
+      .reject(function (pair) {
+        return isNullOrUndefined(pair[1]);
+      })
+      .object()
+      .value();
 }
 
+// Returns true if all filters pass for this post
+function checkFilters(filtersParam, meta) {
+
+  // Remove all null and undefined elements from the filters
+  let filters = cleanFilters(filtersParam);
+
+  // Check that every filter pass
+  return _.every(filters, function (value, filter) {
+    return filterFunctions[filter](meta[filter], value);
+  });
+
+}
+
+// Retrieve posts and process them
+// ------------------------------
+
 const getPost = function (filename) {
-  const content = fs.readFileSync(path.join(appRoot.path, getPostsPath(), filename), 'utf8');
+  const content = fs.readFileSync(path.join(getPostsPath(), filename), 'utf8');
   const parsed = metaParser(content);
   return {
     meta: parsed.data,
@@ -87,34 +107,25 @@ export const getPostList = function (filters) {
 
   let retPostList = [];
 
-  const postList = fs.readdirSync(path.join(appRoot.path, getPostsPath()));
-  for (var i = postList.length - 1; i >= 0; i--) {
-    let postName = postList[i];
+  // Get the list of posts
+  const postList = fs.readdirSync(getPostsPath());
 
-    let post = getPost(postName);
+  for (var i = postList.length - 1; i >= 0; i--) {
+    let post = getPost(postList[i]);
 
     // Don't process a post if it doesn't have a slug since it's our unique id for a post
     if (post && post.meta && post.meta.slug) {
-      if (checkEmptyFilter(filters)) {
-        // If there is no filters, add every blog post
+
+      // If there is no filter, or the filters pass, add the post to the array
+      if (
+        !filters ||
+        _.isEmpty(cleanFilters(filters)) ||
+        checkFilters(filters, post.meta)
+      ) {
         post.id = post.meta.slug;
         retPostList.push(post);
-      } else {
-
-        for (let filter in filters) {
-          if (!isNullOrUndefined(filters[filter]) && {}.hasOwnProperty.call(filters, filter)) {
-
-            if (filterFunctions[filter](post.meta[filter], filters[filter])) {
-              post.id = post.meta.slug;
-              retPostList.push(post);
-            }
-
-          }
-        }
-
       }
     }
-
 
   }
 
