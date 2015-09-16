@@ -5,7 +5,8 @@ import {
   GraphQLString,
 } from 'graphql/type';
 
-import { getBlog, getPostList } from './database';
+import { getBlog } from './classes';
+import { getDatabase } from '../../config';
 import { blogType, postType, node } from './types';
 
 var Root = new GraphQLObjectType({
@@ -28,7 +29,7 @@ var Root = new GraphQLObjectType({
           type: GraphQLString,
         },
       },
-      resolve: (root, args) => getPostList(args)[0],
+      resolve: (root, args) => getDatabase().getPostList(args)[0],
     }
 
   })

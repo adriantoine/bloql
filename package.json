@@ -33,8 +33,6 @@
     "graphql-relay": "^0.3.2",
     "gray-matter": "^2.0.1",
     "lodash": "^3.10.1",
-    "markdown-it": "^4.4.0",
-    "moment": "^2.10.6",
     "react": "^0.14.0-rc1",
     "react-relay": "^0.2.1"
   },

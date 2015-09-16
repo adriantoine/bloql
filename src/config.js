@@ -1,12 +1,11 @@
 
-var postsPath = 'posts';
+var database = null;
 
 module.exports.setConfig = function (options) {
-  if (options.postsPath) {
-    postsPath = options.postsPath;
-  }
+  database = options.database || null;
+  database.setConfig(options);
 };
 
-module.exports.getPostsPath = function () {
-  return postsPath;
+module.exports.getDatabase = function () {
+  return database;
 };

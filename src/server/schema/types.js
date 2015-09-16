@@ -17,7 +17,8 @@ import {
   connectionDefinitions,
 } from 'graphql-relay';
 
-import { Post, Blog, getPostList, getBlog } from './database';
+import { Post, Blog, getBlog } from './classes';
+import { getDatabase } from '../../config';
 import metaType from './metaType';
 
 export const node = nodeDefinitions(
@@ -27,7 +28,7 @@ export const node = nodeDefinitions(
     var {type, id} = fromGlobalId(globalId);
 
     if (type === 'Post') {
-      return getPostList({slug: id})[0];
+      return getDatabase().getPostList({slug: id})[0];
     } else if (type === 'Blog') {
       return getBlog();
     }
@@ -86,6 +87,7 @@ export const blogType = new GraphQLObjectType({
     posts: {
       type: connection.connectionType,
       description: 'Blog posts',
+
       args: _.extend(connectionArgs, {
         startDate: {
           type: GraphQLString
@@ -103,7 +105,8 @@ export const blogType = new GraphQLObjectType({
           type: new GraphQLList(GraphQLString)
         }
       }),
-      resolve: (blog, args) => connectionFromArray(getPostList({
+
+      resolve: (blog, args) => connectionFromArray(getDatabase().getPostList({
         startDate: args.startDate,
         endDate: args.endDate,
         date: args.date,
