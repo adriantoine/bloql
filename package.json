@@ -1,6 +1,6 @@
 {
   "name": "bloql",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Blog engine powered by blog engine powered by React using Relay and GraphQL to interact with data",
   "scripts": {
     "clean": "rm -rf dist/",
@@ -28,13 +28,13 @@
   },
   "homepage": "https://github.com/adriantoine/bloql#readme",
   "dependencies": {
-    "express-graphql": "^0.3.0",
-    "graphql": "^0.4.3",
+    "express-graphql": "^0.4.0",
+    "graphql": "^0.4.7",
     "graphql-relay": "^0.3.2",
     "gray-matter": "^2.0.1",
     "lodash": "^3.10.1",
-    "react": "^0.14.0-rc1",
-    "react-relay": "^0.2.1"
+    "react": "^0.14.0-rc",
+    "react-relay": "^0.3.2"
   },
   "devDependencies": {
     "babel-eslint": "^4.1.1",
