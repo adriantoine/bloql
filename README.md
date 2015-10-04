@@ -4,6 +4,11 @@ Blog engine powered by blog engine powered by [React](https://facebook.github.io
 
 # Usage
 
-It is currently used on an experimental version of my personal website: https://github.com/adriantoine/adriantoine.com/tree/react
+It is currently used on my personal website: https://github.com/adriantoine/adriantoine.com
 
-Doc to be coming
+- Here is the backend part to set up the posts folder and the data retriever (in this case it's just markdown files from a folder): https://github.com/adriantoine/adriantoine.com/blob/master/server.js#L25-L29
+- Here is a usage of the `PostList` component: https://github.com/adriantoine/adriantoine.com/blob/master/src/components/PostList/PostList.js#L38
+- Here is a usage of the single `Post` component: https://github.com/adriantoine/adriantoine.com/blob/master/src/components/Post/Post.js#L35
+- And you probably also need to have a look at my `package.json` since the way I manager peerDependencies is still a bit dodgy: https://github.com/adriantoine/adriantoine.com/blob/master/package.json
+
+Proper docs with proper examples to be coming... (and improvements as well)
