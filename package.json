@@ -4,12 +4,12 @@
   "description": "Blog engine powered by blog engine powered by React using Relay and GraphQL to interact with data",
   "scripts": {
     "clean": "rm -rf dist/",
-    "cp-server": "cp -r src/server/ dist/",
+    "compile-server": "babel src/server --out-dir dist",
     "cp-files": "cp package.json dist/ && cp README.md dist/",
     "lint": "eslint src",
     "update-schema": "babel-node ./scripts/updateSchema.js",
     "watch": "gulp watch",
-    "build": "npm run clean && npm run lint && npm run cp-server && npm run update-schema && webpack && npm run cp-files"
+    "build": "npm run clean && npm run lint && npm run compile-server && npm run update-schema && webpack && npm run cp-files"
   },
   "repository": {
     "type": "git",
