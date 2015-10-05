@@ -6,7 +6,7 @@ import {
 } from 'graphql/type';
 
 import { getBlog } from './classes';
-import { getDatabase } from '../../config';
+import { getDatabase } from '../config';
 import { blogType, postType, node } from './types';
 
 var Root = new GraphQLObjectType({

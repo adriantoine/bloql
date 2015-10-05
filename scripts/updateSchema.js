@@ -16,7 +16,7 @@ async () => {
     );
   } else {
     fs.writeFileSync(
-      path.join(__dirname, '../dist/server/schema/schema.json'),
+      path.join(__dirname, '../dist/schema/schema.json'),
       JSON.stringify(result, null, 2)
     );
   }
@@ -24,6 +24,6 @@ async () => {
 
 // Save user readable type system shorthand of schema
 fs.writeFileSync(
-  path.join(__dirname, '../dist/server/schema/schema.graphql'),
+  path.join(__dirname, '../dist/schema/schema.graphql'),
   printSchema(Schema)
 );

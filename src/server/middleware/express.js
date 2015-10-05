@@ -1,7 +1,7 @@
 
 import _ from 'lodash';
 import graphqlHTTP from 'express-graphql';
-import { setConfig } from '../../config';
+import { setConfig } from '../config';
 
 
 export default function (app, options) {

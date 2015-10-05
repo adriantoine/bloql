@@ -18,7 +18,7 @@ import {
 } from 'graphql-relay';
 
 import { Post, Blog, getBlog } from './classes';
-import { getDatabase } from '../../config';
+import { getDatabase } from '../config';
 import metaType from './metaType';
 
 export const node = nodeDefinitions(
