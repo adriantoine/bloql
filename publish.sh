@@ -1,10 +1,14 @@
 
 #!/usr/bin/env sh
 ./node_modules/.bin/trash node_modules &>/dev/null;
+
 git pull --rebase &&
 npm install &&
 # npm test &&
 npm version ${1:-patch} &&
-npm publish &&
+npm run build &&
 git tag $(node -e 'process.stdout.write(require("./package.json").version)') &&
-git push --follow-tags
+git push origin master --follow-tags;
+
+cd dist;
+npm publish &&;
