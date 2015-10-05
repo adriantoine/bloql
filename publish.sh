@@ -8,7 +8,7 @@ npm install &&
 npm version ${1:-patch} &&
 npm run build &&
 git tag $(node -e 'process.stdout.write(require("./package.json").version)') &&
-git push origin master --follow-tags;
+git push origin master --follow-tags
 
-cd dist;
-npm publish &&;
+cd dist
+npm publish &&
