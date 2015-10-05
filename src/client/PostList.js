@@ -70,8 +70,8 @@ function createRoot(Blog) {
   };
 }
 
-export const create = function (PostList) {
+export default function (PostList) {
   var RelayPostList = createPostList(PostList);
   var Blog = createBlog(RelayPostList, PostList);
   return createRoot(Blog);
-};
+}

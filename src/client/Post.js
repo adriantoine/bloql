@@ -34,7 +34,7 @@ function createRoot(Post) {
   };
 }
 
-export const create = function (Post) {
+export default function (Post) {
   var post = createPost(Post);
   return createRoot(post);
-};
+}
