@@ -11,6 +11,10 @@ Blog engine powered by blog engine powered by [React](https://facebook.github.io
 
 # Usage
 
+Have a look there for minimal and understandable examples: [bloql-example](https://github.com/adriantoine/bloql-examples)
+
+# Real world usage
+
 It is currently used on my personal website: https://github.com/adriantoine/adriantoine.com
 
 - Here is the backend part to set up the posts folder and the data retriever (in this case it's just markdown files from a folder): https://github.com/adriantoine/adriantoine.com/blob/master/server.js#L25-L29
