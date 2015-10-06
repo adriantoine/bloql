@@ -1,6 +1,6 @@
 {
   "name": "bloql",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Blog engine powered by React using Relay and GraphQL to interact with data",
   "scripts": {
     "dev": "webpack --watch --progress",
