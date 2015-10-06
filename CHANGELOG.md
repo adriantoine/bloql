@@ -1,4 +1,3 @@
-# Change Log
 
 ## [0.8.3](https://github.com/adriantoine/bloql/tree/0.8.3) (2015-10-06)
 Small code fix and added back webpack options

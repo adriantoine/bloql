@@ -3,6 +3,7 @@
   "version": "0.8.3",
   "description": "Blog engine powered by blog engine powered by React using Relay and GraphQL to interact with data",
   "scripts": {
+    "dev": "webpack --watch --progress",
     "clean": "rm -rf dist/",
     "compile-server": "babel src/server --out-dir dist",
     "cp-files": "cp package.json dist/ && cp README.md dist/",

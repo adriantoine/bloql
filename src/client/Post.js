@@ -1,47 +1,60 @@
 
-import Relay, { RootContainer } from 'react-relay';
-import React from 'react';
-import Route from './routes/PostRoute';
+import Relay from 'react-relay';
 
-function createRelayComponent(component) {
-  return Relay.createContainer(component, {
-    fragments: {
-      post: () => Relay.QL`
-        fragment on Post {
-          meta {
-            title
-            slug
-            date
-            categories
-            tags
-          },
-          content
-        }
-      `,
-    },
-  });
+import DefaultRoute from './routes/PostRoute';
+import PostComponent from './_post/PostComponent';
+import generateRootComponent from './_post/generateRootComponent';
+
+class Post {
+
+  constructor() {
+
+    // Create initial fragment
+    this.fragment = Relay.QL`
+      fragment on Post {
+        meta {
+          title
+          slug
+          date
+          categories
+          tags
+        },
+        content
+      }
+    `;
+
+    // Set default route
+    this.route = DefaultRoute;
+
+    // Create a very generic component
+    this.setComponent(PostComponent);
+
+  }
+
+  // Generate components from the React one provided
+  setComponent(component) {
+
+    this.Component = component;
+
+    this.Relay = this.setRelay(this.Component);
+    this.Root = this.setRoot(this.Relay);
+
+  }
+
+  // Generate Relay component
+  setRelay(component = this.Component) {
+    return Relay.createContainer(component, {
+      fragments: {
+        post: () => this.fragment,
+      }
+    });
+  }
+
+  // Generate Relay Root Container
+  setRoot(relay = this.Relay) {
+    return generateRootComponent(relay, this.Component.slug, this.route);
+  }
+
 }
 
-function createRelayRoot(relayComponent, component) {
-
-  return React.createClass({
-
-    render: function () {
-
-      const routeParams = {
-        slug: this.props.slug || component.slug
-      };
-
-      return React.createElement(RootContainer, {
-        Component: relayComponent,
-        route: new Route(routeParams)
-      });
-    }
-
-  });
-}
-
-export default function (component) {
-  var relayComponent = createRelayComponent(component);
-  return createRelayRoot( relayComponent, component );
-}
+export default new Post();
