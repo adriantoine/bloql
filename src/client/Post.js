@@ -1,10 +1,10 @@
 
 import Relay, { RootContainer } from 'react-relay';
-import React, { Component } from 'react';
+import React from 'react';
 import Route from './routes/PostRoute';
 
-function createPost(Post) {
-  return Relay.createContainer(Post, {
+function createPost(component) {
+  return Relay.createContainer(component, {
     fragments: {
       post: () => Relay.QL`
         fragment on Post {
@@ -22,19 +22,21 @@ function createPost(Post) {
   });
 }
 
-function createRoot(Post) {
-  return class Root extends Component {
-    render() {
-      return (
-        <RootContainer Component={ Post } route={ new Route({
+function createRoot(component) {
+  return React.createClass({
+
+    render: function () {
+      return React.createElement(RootContainer, {
+        Component: component,
+        route: new Route({
           slug: this.props.slug
-        }) }/>
-      );
+        })
+      });
     }
-  };
+
+  });
 }
 
-export default function (Post) {
-  var post = createPost(Post);
-  return createRoot(post);
+export default function (component) {
+  return createRoot( createPost(component) );
 }
