@@ -1,9 +1,10 @@
 
 import Relay from 'react-relay';
+import React from 'react';
 
 import DefaultRoute from './routes/PostRoute';
-import PostComponent from './_post/PostComponent';
 import generateRootComponent from './_post/generateRootComponent';
+import bloqlPost from './_post/bloqlPost';
 
 class Post {
 
@@ -26,8 +27,10 @@ class Post {
     // Set default route
     this.route = DefaultRoute;
 
-    // Create a very generic component
-    this.setComponent(PostComponent);
+    // Create a very generic component to begin
+    this.setComponent(React.createClass({
+      render: function () { return <div/>; }
+    }));
 
   }
 
@@ -36,13 +39,21 @@ class Post {
 
     this.Component = component;
 
-    this.Relay = this.setRelay(this.Component);
+    this.Bloql = this.setBloql(this.Component);
+    this.Relay = this.setRelay(this.Bloql);
     this.Root = this.setRoot(this.Relay);
+
+    return this.Root;
 
   }
 
+  // Generate bloql post element with custom functions
+  setBloql(component) {
+    return bloqlPost(component);
+  }
+
   // Generate Relay component
-  setRelay(component = this.Component) {
+  setRelay(component) {
     return Relay.createContainer(component, {
       fragments: {
         post: () => this.fragment,
@@ -51,10 +62,13 @@ class Post {
   }
 
   // Generate Relay Root Container
-  setRoot(relay = this.Relay) {
-    return generateRootComponent(relay, this.Component.slug, this.route);
+  setRoot(component) {
+    return generateRootComponent(component, this.Component.slug, this.route);
   }
 
 }
 
-export default new Post();
+var post = new Post();
+
+export var setComponent = post.setComponent.bind(post);
+export default post;
