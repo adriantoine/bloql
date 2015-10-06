@@ -7,7 +7,7 @@
 ![Stable version](https://img.shields.io/npm/v/bloql.svg?style=flat)
 ![Stable version](https://img.shields.io/gemnasium/adriantoine/bloql.svg?style=flat)
 
-Blog engine powered by blog engine powered by [React](https://facebook.github.io/react/) using [Relay](https://facebook.github.io/relay/) and [GraphQL](https://facebook.github.io/graphql/) to interact with data.
+Blog engine powered by [React](https://facebook.github.io/react/) using [Relay](https://facebook.github.io/relay/) and [GraphQL](https://facebook.github.io/graphql/) to interact with data.
 
 # Usage
 - Install `bloql` package and a bloql retriever to get files:
@@ -63,14 +63,14 @@ Blog engine powered by blog engine powered by [React](https://facebook.github.io
   // Convert your component into a Bloql element
   PostList = setComponent(PostList);
 
-  // You can place your component anywhere in any application and 
+  // You can place your component anywhere in any application and
   // combine it with other React components
   ReactDOM.render(
     <PostList/>,
     document.getElementById('app')
   );
   ```
-  
+
 Have a look there for minimal and understandable examples: [bloql-examples](https://github.com/adriantoine/bloql-examples)
 
 # Real world usage
