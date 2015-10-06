@@ -3,7 +3,7 @@ import Relay, { RootContainer } from 'react-relay';
 import React from 'react';
 import Route from './routes/PostRoute';
 
-function createPost(component) {
+function createRelayComponent(component) {
   return Relay.createContainer(component, {
     fragments: {
       post: () => Relay.QL`
@@ -22,15 +22,19 @@ function createPost(component) {
   });
 }
 
-function createRoot(component) {
+function createRelayRoot(relayComponent, component) {
+
   return React.createClass({
 
     render: function () {
+
+      const routeParams = {
+        slug: this.props.slug || component.slug
+      };
+
       return React.createElement(RootContainer, {
-        Component: component,
-        route: new Route({
-          slug: this.props.slug
-        })
+        Component: relayComponent,
+        route: new Route(routeParams)
       });
     }
 
@@ -38,5 +42,6 @@ function createRoot(component) {
 }
 
 export default function (component) {
-  return createRoot( createPost(component) );
+  var relayComponent = createRelayComponent(component);
+  return createRelayRoot( relayComponent, component );
 }
