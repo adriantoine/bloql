@@ -24,7 +24,7 @@
     "graphql"
   ],
   "author": "Adrien Antoine <adriantoine@gmail.com> (http://adriantoine.com/)",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/adriantoine/bloql/issues",
     "email": "adriantoine@gmail.com"
