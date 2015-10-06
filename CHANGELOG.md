@@ -1,4 +1,30 @@
 
+## [0.9.0](https://github.com/adriantoine/bloql/tree/0.9.0) (2015-10-06)
+- Added ability to update the slug of a post which will change the displayed post, just run this command in any bloql `Post` component:
+  ```js
+this.props.bloql.setSlug('my-post-slug');
+  ```
+  Example: https://github.com/adriantoine/bloql-examples/blob/master/basic/public/post.js#L11
+
+- Changed interface and function names:
+  ```js
+import createPost from 'bloql/Post';
+import createPostList from 'bloql/PostList';
+
+// become =>
+
+import { setComponent } from 'bloql/Post';
+import { setComponent } from 'bloql/PostList';
+  ```
+- `Post` element is much easier to customise with your own routes or fragments, so if you require the `Post` component this way:
+  ```js
+import Post from 'bloql/Post';
+  ```
+  you'll be able to change almost anything from this post before calling its method `setComponent` with your component. More documentation and examples to be coming, for now you can have a look at: https://github.com/adriantoine/bloql/blob/master/src/client/Post.js
+  This cool stuff is not yet available for `PostList` but that should be in the next release
+
+[Full Changelog](https://github.com/adriantoine/bloql/compare/0.8.3...0.9.0)
+
 ## [0.8.3](https://github.com/adriantoine/bloql/tree/0.8.3) (2015-10-06)
 Small code fix and added back webpack options
 

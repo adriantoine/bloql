@@ -11,7 +11,7 @@ Blog engine powered by blog engine powered by [React](https://facebook.github.io
 
 # Usage
 
-Have a look there for minimal and understandable examples: [bloql-example](https://github.com/adriantoine/bloql-examples)
+Have a look there for minimal and understandable examples: [bloql-examples](https://github.com/adriantoine/bloql-examples)
 
 # Real world usage
 
