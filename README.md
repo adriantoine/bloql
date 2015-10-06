@@ -4,8 +4,8 @@
 [![Stories in Current Priority](https://badge.waffle.io/adriantoine/bloql.svg?label=current%20priority&title=Current%20Priority)](http://waffle.io/adriantoine/bloql)
 [![Stories in Progress](https://badge.waffle.io/adriantoine/bloql.svg?label=in%20progress&title=In%20Progress)](http://waffle.io/adriantoine/bloql)
 
-![Stable version](https://img.shields.io/npm/v/bloql.svg?style=flat)
-![Stable version](https://img.shields.io/gemnasium/adriantoine/bloql.svg?style=flat)
+[![Stable version](https://img.shields.io/npm/v/bloql.svg?style=flat)](https://www.npmjs.com/package/bloql)
+[![Dependency Status](https://img.shields.io/gemnasium/adriantoine/bloql.svg?style=flat)](https://gemnasium.com/adriantoine/bloql)
 
 Blog engine powered by [React](https://facebook.github.io/react/) using [Relay](https://facebook.github.io/relay/) and [GraphQL](https://facebook.github.io/graphql/) to interact with data.
 
