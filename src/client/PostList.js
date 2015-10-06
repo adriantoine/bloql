@@ -70,8 +70,8 @@ function createRoot(Blog) {
   };
 }
 
-export default function (PostList) {
+export var setComponent = function (PostList) {
   var RelayPostList = createPostList(PostList);
   var Blog = createBlog(RelayPostList, PostList);
   return createRoot(Blog);
-}
+};
