@@ -45,6 +45,7 @@ import { setComponent } from 'bloql/Post';
 import { setComponent } from 'bloql/PostList';
   ```
 - `Post` element is much easier to customise with your own routes or fragments, so if you require the `Post` component this way:
+
   ```js
 import Post from 'bloql/Post';
   ```
