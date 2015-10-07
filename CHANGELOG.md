@@ -11,7 +11,7 @@ this.props.bloql.resetFilters();
   ```
   Example: https://github.com/adriantoine/bloql-examples/blob/master/filters/public/index.js#L10
 
-  - Changed function names for better consistency (hopefully it will be the last time I do that):
+- Changed function names for better consistency (hopefully it will be the last time I do that):
   ```js
 import { setComponent } from 'bloql/Post';
 import { setComponent } from 'bloql/PostList';
@@ -22,8 +22,8 @@ import { createComponent } from 'bloql/Post';
 import { createComponent } from 'bloql/PostList';
   ```
 
-  - Just like `Post`, `PostList` becomes a big customisable object, see previous release.
-  - This is not part of this repo/package but examples have been updated to demonstrate more features: [bloql-examples](https://github.com/adriantoine/bloql-examples)
+- Just like `Post`, `PostList` becomes a big customisable object, see previous release.
+- This is not part of this repo/package but examples have been updated to demonstrate more features: [bloql-examples](https://github.com/adriantoine/bloql-examples)
 
 [Full Changelog](https://github.com/adriantoine/bloql/compare/0.9.1...0.10.0)
 
