@@ -38,7 +38,7 @@ class PostList {
   }
 
   // Set all components
-  setComponent(component) {
+  createComponent(component) {
 
     this.Component = component;
 
@@ -79,5 +79,5 @@ class PostList {
 
 var postList = new PostList();
 
-export var setComponent = postList.setComponent.bind(postList);
+export var createComponent = postList.createComponent.bind(postList);
 export default postList;

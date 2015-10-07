@@ -1,4 +1,32 @@
 
+## [0.10.0](https://github.com/adriantoine/bloql/tree/0109.0) (2015-10-07)
+
+- Added ability to dynamically update filters on the post list using bloql functions in an `PostList` component:
+  ```js
+// Filter a list of posts by tags or date
+this.props.bloql.setFilters({ tags: ['trip', 'usa'], startDate: '2015-01-01' });
+
+// Reset filters
+this.props.bloql.resetFilters();
+  ```
+  Example: https://github.com/adriantoine/bloql-examples/blob/master/filters/public/index.js#L10
+
+  - Changed function names for better consistency (hopefully it will be the last time I do that):
+  ```js
+import { setComponent } from 'bloql/Post';
+import { setComponent } from 'bloql/PostList';
+
+// become =>
+
+import { createComponent } from 'bloql/Post';
+import { createComponent } from 'bloql/PostList';
+  ```
+
+  - Just like `Post`, `PostList` becomes a big customisable object, see previous release.
+  - This is not part of this repo/package but examples have been updated to demonstrate more features: [bloql-examples](https://github.com/adriantoine/bloql-examples)
+
+[Full Changelog](https://github.com/adriantoine/bloql/compare/0.9.1...0.10.0)
+
 ## [0.9.0](https://github.com/adriantoine/bloql/tree/0.9.0) (2015-10-06)
 - Added ability to update the slug of a post which will change the displayed post, just run this command in any bloql `Post` component:
   ```js
