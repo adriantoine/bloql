@@ -1,7 +1,9 @@
 
-import Relay, { RootContainer } from 'react-relay';
-import React, { Component } from 'react';
+import Relay from 'react-relay';
 import DefaultRoute from './routes/BlogRoute';
+import { generateBlogReactComponent, generateBlogRelayComponent } from './_postlist/generateBlogComponent';
+import generateRootComponent from './_postlist/generateRootComponent';
+import bloqlPostList from './_postlist/bloqlPostList';
 
 class PostList {
 
@@ -28,6 +30,11 @@ class PostList {
     // Set default route
     this.route = DefaultRoute;
 
+    // Set the functions there to allow it to be overriden
+    this.generateBlogReactComponent = generateBlogReactComponent;
+    this.generateBlogRelayComponent = generateBlogRelayComponent;
+    this.generateRootComponent = generateRootComponent;
+
   }
 
   // Set all components
@@ -35,12 +42,18 @@ class PostList {
 
     this.Component = component;
 
-    this.Relay = this.createRelay(this.Component);
+    this.Bloql = this.createBloql(this.Component);
+    this.Relay = this.createRelay(this.Bloql);
     this.Blog = this.createBlog(this.Relay, this.Component);
     this.Root = this.createRoot(this.Blog);
 
     return this.Root;
 
+  }
+
+  // Generate bloql post element with custom functions
+  createBloql(component) {
+    return bloqlPostList(component);
   }
 
   createRelay(component) {
@@ -51,52 +64,15 @@ class PostList {
     });
   }
 
-  createBlog(RelayPostList, component) {
+  createBlog(component) {
+    var ReactComponent = this.generateBlogReactComponent(component);
+    var RelayComponent = this.generateBlogRelayComponent(ReactComponent, this.Component.filters || {}, component);
 
-    class Blog extends Component {
-      render() {
-        return <RelayPostList posts={ this.props.blog.posts } />;
-      }
-    }
-
-    return Relay.createContainer(Blog, {
-
-      initialVariables: {
-        count: component.postCount || 10,
-
-        startDate: component.startDate || null,
-        endDate: component.endDate || null,
-        date: component.date || null,
-        categories: component.categories || null,
-        tags: component.tags || null,
-      },
-
-      fragments: {
-        blog: () => {
-          return Relay.QL`
-            fragment on Blog {
-              posts(first: $count startDate:$startDate endDate:$endDate date:$date categories:$categories tags:$tags) {
-                ${RelayPostList.getFragment('posts')}
-              }
-            }
-          `;
-        },
-      },
-    });
+    return RelayComponent;
   }
 
   createRoot(component) {
-
-    var Route = this.route;
-
-    return class Root extends Component {
-      render() {
-        return (
-          <RootContainer Component={ component } route={ new Route() }/>
-        );
-      }
-    };
-
+    return generateRootComponent(component, this.route);
   }
 
 }

@@ -41,7 +41,7 @@ Blog engine powered by [React](https://facebook.github.io/react/) using [Relay](
   ```js
   import React, { Component } from 'react';
   import ReactDOM from 'react-dom';
-  import { setComponent } from 'bloql/PostList';
+  import { createComponent } from 'bloql/PostList';
 
   class PostList extends Component {
 
@@ -61,7 +61,7 @@ Blog engine powered by [React](https://facebook.github.io/react/) using [Relay](
   }
 
   // Convert your component into a Bloql element
-  PostList = setComponent(PostList);
+  PostList = createComponent(PostList);
 
   // You can place your component anywhere in any application and
   // combine it with other React components

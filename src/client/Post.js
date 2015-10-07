@@ -27,33 +27,36 @@ class Post {
     // Set default route
     this.route = DefaultRoute;
 
+    // Set the functions there to allow it to be overriden
+    this.generateRootComponent = generateRootComponent;
+
     // Create a very generic component to begin
-    this.setComponent(React.createClass({
+    this.createComponent(React.createClass({
       render: function () { return <div/>; }
     }));
 
   }
 
   // Generate components from the React one provided
-  setComponent(component) {
+  createComponent(component) {
 
     this.Component = component;
 
-    this.Bloql = this.setBloql(this.Component);
-    this.Relay = this.setRelay(this.Bloql);
-    this.Root = this.setRoot(this.Relay);
+    this.Bloql = this.createBloql(this.Component);
+    this.Relay = this.createRelay(this.Bloql);
+    this.Root = this.createRoot(this.Relay);
 
     return this.Root;
 
   }
 
   // Generate bloql post element with custom functions
-  setBloql(component) {
+  createBloql(component) {
     return bloqlPost(component);
   }
 
   // Generate Relay component
-  setRelay(component) {
+  createRelay(component) {
     return Relay.createContainer(component, {
       fragments: {
         post: () => this.fragment,
@@ -62,13 +65,13 @@ class Post {
   }
 
   // Generate Relay Root Container
-  setRoot(component) {
-    return generateRootComponent(component, this.Component.slug, this.route);
+  createRoot(component) {
+    return this.generateRootComponent(component, this.Component.slug, this.route);
   }
 
 }
 
 var post = new Post();
 
-export var setComponent = post.setComponent.bind(post);
+export var createComponent = post.createComponent.bind(post);
 export default post;
