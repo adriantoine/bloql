@@ -1,77 +1,107 @@
 
 import Relay, { RootContainer } from 'react-relay';
 import React, { Component } from 'react';
-import Route from './routes/BlogRoute';
+import DefaultRoute from './routes/BlogRoute';
 
-function createPostList(PostList) {
-  return Relay.createContainer(PostList, {
-    fragments: {
-      posts: () => Relay.QL`
-        fragment on PostConnection {
-          edges {
-            node {
-              id,
-              meta {
-                title
-                slug
-                date
-                categories
-                tags
-              }
+class PostList {
+
+  constructor() {
+
+    // Create post list initial fragment
+    this.postListFragment = Relay.QL`
+      fragment on PostConnection {
+        edges {
+          node {
+            id,
+            meta {
+              title
+              slug
+              date
+              categories
+              tags
             }
           }
         }
-      `,
-    },
-  });
-}
+      }
+    `;
 
-function createBlog(RelayPostList, PostList) {
+    // Set default route
+    this.route = DefaultRoute;
 
-  class _Blog extends Component {
-    render() {
-      return <RelayPostList posts={ this.props.blog.posts } />;
-    }
   }
 
-  return Relay.createContainer(_Blog, {
+  // Set all components
+  setComponent(component) {
 
-    initialVariables: {
-      count: PostList.postCount || 10,
+    this.Component = component;
 
-      startDate: PostList.startDate || null,
-      endDate: PostList.endDate || null,
-      date: PostList.date || null,
-      categories: PostList.categories || null,
-      tags: PostList.tags || null,
-    },
+    this.Relay = this.createRelay(this.Component);
+    this.Blog = this.createBlog(this.Relay, this.Component);
+    this.Root = this.createRoot(this.Blog);
 
-    fragments: {
-      blog: () => {
-        return Relay.QL`
-          fragment on Blog {
-            posts(first: $count startDate:$startDate endDate:$endDate date:$date categories:$categories tags:$tags) {
-              ${RelayPostList.getFragment('posts')}
-            }
-          }
-        `;
+    return this.Root;
+
+  }
+
+  createRelay(component) {
+    return Relay.createContainer(component, {
+      fragments: {
+        posts: () => this.postListFragment,
       },
-    },
-  });
-}
+    });
+  }
 
-function createRoot(Blog) {
-  return class Root extends Component {
-    render() {
-      return (
-        <RootContainer Component={ Blog } route={ new Route() }/>
-      );
+  createBlog(RelayPostList, component) {
+
+    class Blog extends Component {
+      render() {
+        return <RelayPostList posts={ this.props.blog.posts } />;
+      }
     }
-  };
+
+    return Relay.createContainer(Blog, {
+
+      initialVariables: {
+        count: component.postCount || 10,
+
+        startDate: component.startDate || null,
+        endDate: component.endDate || null,
+        date: component.date || null,
+        categories: component.categories || null,
+        tags: component.tags || null,
+      },
+
+      fragments: {
+        blog: () => {
+          return Relay.QL`
+            fragment on Blog {
+              posts(first: $count startDate:$startDate endDate:$endDate date:$date categories:$categories tags:$tags) {
+                ${RelayPostList.getFragment('posts')}
+              }
+            }
+          `;
+        },
+      },
+    });
+  }
+
+  createRoot(component) {
+
+    var Route = this.route;
+
+    return class Root extends Component {
+      render() {
+        return (
+          <RootContainer Component={ component } route={ new Route() }/>
+        );
+      }
+    };
+
+  }
+
 }
 
-export var setComponent = function (PostList) {
-  var RelayPostList = createPostList(PostList);
-  var Blog = createBlog(RelayPostList, PostList);
-  return createRoot(Blog);
-};
+var postList = new PostList();
+
+export var setComponent = postList.setComponent.bind(postList);
+export default postList;
