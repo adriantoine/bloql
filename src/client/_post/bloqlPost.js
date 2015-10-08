@@ -1,5 +1,5 @@
 
-import slugStore from './slugStore';
+import postStore from './postStore';
 import React from 'react';
 
 export default function (Component) {
@@ -7,7 +7,7 @@ export default function (Component) {
   return React.createClass({
 
     setSlug: function (slug) {
-      slugStore.setSlug(slug);
+      postStore.setSlug(slug);
     },
 
     render: function () {
@@ -16,7 +16,7 @@ export default function (Component) {
         setSlug: this.setSlug,
       } };
 
-      return <Component {...this.props} {...bloqlProps} />;
+      return <Component {...this.props} {...postStore.props} {...bloqlProps} />;
     }
 
   });

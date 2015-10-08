@@ -1,5 +1,5 @@
 
-import filterStore from './filterStore';
+import postListStore from './postListStore';
 import React from 'react';
 
 export default function (Component) {
@@ -7,10 +7,10 @@ export default function (Component) {
   return React.createClass({
 
     setFilters: function (filters) {
-      filterStore.setFilters(filters);
+      postListStore.setFilters(filters);
     },
     resetFilters: function () {
-      filterStore.resetFilters();
+      postListStore.resetFilters();
     },
 
     render: function () {
@@ -20,7 +20,7 @@ export default function (Component) {
         resetFilters: this.resetFilters,
       } };
 
-      return <Component {...this.props} {...bloqlProps} />;
+      return <Component {...this.props} {...postListStore.props} {...bloqlProps} />;
     }
 
   });

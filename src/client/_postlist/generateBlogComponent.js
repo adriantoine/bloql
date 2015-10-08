@@ -3,7 +3,7 @@ import Relay from 'react-relay';
 import _ from 'lodash';
 import React, { Component } from 'react';
 
-import filterStore from './filterStore';
+import postListStore from './postListStore';
 
 var originalFilters = {
   count: 10,
@@ -22,8 +22,8 @@ export const generateBlogReactComponent = function (RelayPostList) {
       super();
 
       // Make the functions available in the store for other components
-      filterStore.setFilters = this.setFilters.bind(this);
-      filterStore.resetFilters = this.resetFilters.bind(this);
+      postListStore.setFilters = this.setFilters.bind(this);
+      postListStore.resetFilters = this.resetFilters.bind(this);
 
     }
 

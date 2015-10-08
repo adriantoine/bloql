@@ -1,5 +1,5 @@
 
-import slugStore from './slugStore';
+import postStore from './postStore';
 import { RootContainer } from 'react-relay';
 import React, { Component } from 'react';
 
@@ -11,7 +11,7 @@ export default function (relay, staticSlug, PostRoute) {
       super();
 
       // Make the function setSlug available in the store for other components
-      slugStore.setSlug = this.setSlug.bind(this);
+      postStore.setSlug = this.setSlug.bind(this);
 
     }
 
@@ -37,7 +37,12 @@ export default function (relay, staticSlug, PostRoute) {
     }
 
     render() {
+
+      // Pass props to react component
+      postStore.props = this.props;
+
       return <RootContainer Component={relay} route={new PostRoute({ slug: this.getSlug() })}/>;
+
     }
 
   };
