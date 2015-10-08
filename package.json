@@ -37,7 +37,7 @@
     "lodash": "^3.10.1"
   },
   "peerDependencies": {
-    "react": "^0.14.0-rc",
+    "react": "^0.14.0",
     "react-relay": "^0.3.2"
   },
   "devDependencies": {
