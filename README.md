@@ -50,8 +50,8 @@ Blog engine powered by [React](https://facebook.github.io/react/) using [Relay](
       // Render your post list using all react components you want
       return (
         <ul>
-          {this.props.posts.edges.map(edge =>
-            <li key={edge.node.meta.slug}>{edge.node.meta.title}</li>
+          {this.props.posts.map(post =>
+            <li key={post.meta.slug}>{post.meta.title}</li>
           )}
         </ul>
       );
