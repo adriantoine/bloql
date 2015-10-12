@@ -3,7 +3,7 @@
 
 - Changed bloql interface to avoid polluting `this.props` object and make it easier to access for posts:
 
-for `PostList`:
+  for `PostList`:
   ```js
 {this.props.posts.edges.map(edge =>
   <a href={edge.node.meta.slug}>{edge.node.meta.title}</a>
@@ -14,7 +14,7 @@ for `PostList`:
 )}
   ```
 
-for `Post` (to avoid polluting `this.props`, in case a user wants to have pass his own `post` prop, we shouldn't override it):
+  for `Post` (to avoid polluting `this.props`, in case a user wants to have pass his own `post` prop, we shouldn't override it):
   ```js
 this.props.post
 // becomes:
