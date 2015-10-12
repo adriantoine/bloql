@@ -1,5 +1,29 @@
 
-## [0.10.0](https://github.com/adriantoine/bloql/tree/0109.0) (2015-10-07)
+## [0.11.0](https://github.com/adriantoine/bloql/tree/0.10.0) (2015-10-12)
+
+- Changed bloql interface to avoid polluting `this.props` object and make it easier to access for posts:
+
+for `PostList`:
+  ```js
+{this.props.posts.edges.map(edge =>
+  <a href={edge.node.meta.slug}>{edge.node.meta.title}</a>
+)}
+// becomes:
+{this.props.bloql.posts.map(post =>
+  <a href={post.meta.slug}>{post.meta.title}</a>
+)}
+  ```
+
+for `Post` (to avoid polluting `this.props`, in case a user wants to have pass his own `post` prop, we shouldn't override it):
+  ```js
+this.props.post
+// becomes:
+this.props.bloql.post
+  ```
+
+[Full Changelog](https://github.com/adriantoine/bloql/compare/0.11.0...0.10.1)
+
+## [0.10.0](https://github.com/adriantoine/bloql/tree/0.10.0) (2015-10-07)
 
 - Added ability to dynamically update filters on the post list using bloql functions in an `PostList` component:
   ```js

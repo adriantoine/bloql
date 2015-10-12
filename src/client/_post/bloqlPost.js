@@ -1,6 +1,8 @@
 
-import postStore from './postStore';
 import React from 'react';
+import _ from 'lodash';
+
+import postStore from './postStore';
 
 export default function (Component) {
 
@@ -12,11 +14,14 @@ export default function (Component) {
 
     render: function () {
 
-      var bloqlProps = { bloql: {
-        setSlug: this.setSlug,
-      } };
+      var props = _.extend({
+        bloql: {
+          setSlug: this.setSlug,
+          post: this.props.post,
+        }
+      }, this.props, postStore.props);
 
-      return <Component {...this.props} {...postStore.props} {...bloqlProps} />;
+      return <Component {...props} />;
     }
 
   });
