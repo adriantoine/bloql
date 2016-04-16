@@ -1,7 +1,7 @@
 # bloql
 
-[![Stable version](https://img.shields.io/npm/v/bloql.svg?style=flat)](https://www.npmjs.com/package/bloql)
-[![Dependency Status](https://img.shields.io/gemnasium/adriantoine/bloql.svg?style=flat)](https://gemnasium.com/adriantoine/bloql)
+[![Stable version](https://img.shields.io/npm/v/bloql.svg)](https://www.npmjs.com/package/bloql)
+[![Dependency Status](https://img.shields.io/gemnasium/adriantoine/bloql.svg)](https://gemnasium.com/adriantoine/bloql)
 
 Blog engine powered by [React](https://facebook.github.io/react/) using [Relay](https://facebook.github.io/relay/) and [GraphQL](https://facebook.github.io/graphql/) to interact with data.
 
